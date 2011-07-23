@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>Search With - Options</title>
+<style>
+body{
+	font-family: Georgia;
+	background-color: #fefefe;
+	font-size: 13px;
+}
+#content{
+	width: 800px;
+	margin: 20px auto;
+}
+.engine {
+	margin-top: 15px;
+}
+.pattern{
+	font-family: 'Courier New';
+}
+.highlight{
+	padding: 3px;
+	border: 1px solid #999;
+}
+#new_engine{
+	margin-top: 50px;
+}
+</style>
+</head>
+<script type="text/javascript">
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+	var html = "";
+	var count = localStorage["engine_count"];
+	if(!count || count==0){
+		html += "<div class=\"error\">No Saved Engine</div>";
+		document.getElementById("saved_engines").innerHTML = html;
+	}
+	for (var i = 1; i<=count; i++) {
+		html += "<div class=\"engine\"><span class=\"name highlight\">" + localStorage["engine_name_" + i] + "</span> - <span class=\"pattern highlight\">" + localStorage["engine_pattern_" + i] + "</span> - Edit - <input type=\"button\" onclick=\"delete_key(" + i + ")\" value=\"Delete\" />";
+	}
+	document.getElementById("saved_engines").innerHTML = html;
+}
+function add_option() {
+	if(validate()){
+		var name = document.getElementById("new_engine_name").value;
+		var pattern = document.getElementById("new_engine_pattern").value;
+		var count = localStorage["engine_count"];
+		if(!count)
+			count=0;
+		count++;
+		localStorage["engine_count"]=count;
+		localStorage["engine_name_" + count] = name;
+		localStorage["engine_pattern_" + count] = pattern;
+		document.getElementById("new_engine_name").value = "";
+		document.getElementById("new_engine_pattern").value = "";
+		restore_options();
+	}
+}
+
+function delete_all() {
+    window.localStorage.clear();
+}
+
+function delete_key(key){
+	var count = localStorage["engine_count"];
+	for(var i = key; i<count; i++){
+		localStorage["engine_name_" + i] = localStorage["engine_name_" + (i+1)];
+		localStorage["engine_pattern_" + i] = localStorage["engine_pattern_" + (i+1)];
+	}
+	window.localStorage.removeItem("engine_name_" + count);
+	window.localStorage.removeItem("engine_pattern_" + count);
+	count--;
+	localStorage["engine_count"]=count;
+	restore_options();
+}
+
+function validate(){
+	var name = document.getElementById("new_engine_name").value;
+	var pattern = document.getElementById("new_engine_pattern").value;
+	if(name=="" || pattern==""){
+		alert("Check the Name or Extension. They cannot be empty");
+		return false;
+	}else{
+		return true;
+	}
+}
+</script>
+
+<body onload="restore_options()">
+<div id="content">
+	<h1>Search Engines</h1>
+	<div id="saved_engines">
+		
+	</div>
+	<div id="new_engine">
+	<h1>Add a search engine</h1>
+		<table>
+			<tr>
+				<td>Title</td>
+				<td><input type="text" name="title" id="new_engine_name" />
+			</tr>
+			<tr>
+				<td>Pattern</td>
+				<td><input type="text" name="pattern" id="new_engine_pattern" />
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td style="font-size: 11px;">(use <span class="highlight">%s</span> for the query part. E.g. - <span class="pattern highlight">http://www.google.com/search?ie=UTF-8&q=%s</span> )</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="button" onclick="add_option()" value="Add it!" /></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

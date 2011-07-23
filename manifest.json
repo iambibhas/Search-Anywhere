@@ -1,0 +1,21 @@
+{
+  "name": "Search Anywhere",
+  "description": "Search Any website from your Right click menu.",
+  "version": "1.0",
+  "permissions": [
+		"contextMenus"
+		],
+  "options_page": "options.html",
+  "background_page": "background.html",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+	"128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["contentscript.js"]
+    }
+  ]
+}
