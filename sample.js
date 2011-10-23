@@ -42,8 +42,8 @@ function DuckDuckGoClick(info){
 	var query = encodeURIComponent(info.selectionText);
 	var searchURI = pattern.replace(/\%s/g, query);
 	var serviceCall = searchURI;
-	alert(localS);
-	//chrome.tabs.create({url: serviceCall});
+	//alert(localS);
+	chrome.tabs.create({url: serviceCall});
 }
 function trim(s)
 {
