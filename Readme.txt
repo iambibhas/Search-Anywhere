@@ -1,5 +1,8 @@
 Search Anywhere 1.0
 ====================
+https://chrome.google.com/webstore/detail/oeblleideililpfnlkiepbnipanofloh?hl=en-US
+
+
 It is only in Alpha stage. You can install the extension, add any number of search engines from the options page. 
 
 You have to provide a name of the engine and a pattern. It should be a GET string of the search engine using '%s' in place of the query. e.g. - 
